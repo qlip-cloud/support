@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include qp_customer_support *.css
+recursive-include qp_customer_support *.csv
+recursive-include qp_customer_support *.html
+recursive-include qp_customer_support *.ico
+recursive-include qp_customer_support *.js
+recursive-include qp_customer_support *.json
+recursive-include qp_customer_support *.md
+recursive-include qp_customer_support *.png
+recursive-include qp_customer_support *.py
+recursive-include qp_customer_support *.svg
+recursive-include qp_customer_support *.txt
+recursive-exclude qp_customer_support *.pyc
