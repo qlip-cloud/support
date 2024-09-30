@@ -1,0 +1,45 @@
+{
+ "actions": [],
+ "creation": "2024-09-27 11:14:44.308534",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "band",
+  "support_product"
+ ],
+ "fields": [
+  {
+   "fieldname": "band",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Band",
+   "options": "qp_Support_Band"
+  },
+  {
+   "fieldname": "support_product",
+   "fieldtype": "Link",
+   "in_global_search": 1,
+   "in_list_view": 1,
+   "in_preview": 1,
+   "in_standard_filter": 1,
+   "label": "Support Product",
+   "options": "Support product"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-09-27 11:15:08.781760",
+ "modified_by": "Administrator",
+ "module": "Qp Customer Support",
+ "name": "Band_Support_Product",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
