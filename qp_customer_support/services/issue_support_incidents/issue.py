@@ -10,15 +10,19 @@ from datetime import datetime, timedelta
 
 
 @frappe.whitelist()
-def update_status_close():
+def update_status_close(**args):
     """Called when Issue doctype is load"""
-    ISSUE_STATUS = 'Esperando cierre'
+    ISSUE_STATUS = args.get('issue_status')
+    CLOSE_ISSUE_PARAM = int(args.get('expiration_days'))
+    
     date = datetime.now()
     data = frappe.db.sql("""select name, DATEDIFF(%s, modified) as issue_modified_time from `tabIssue` where status = %s""", (date, ISSUE_STATUS), as_dict=True)
-    close_issue_param = 3
+
+    ISSUE_STATUS = ISSUE_STATUS if ISSUE_STATUS else 'Esperando cierre'
+    CLOSE_ISSUE_PARAM = CLOSE_ISSUE_PARAM if CLOSE_ISSUE_PARAM else 3
 
     for issue in data:
-        if issue.get('issue_modified_time') >= close_issue_param:
+        if issue.get('issue_modified_time') > CLOSE_ISSUE_PARAM:
             """Update issue"""
             doc = frappe.get_doc("Issue", issue.get('name'))
             doc.status = "Closed"
