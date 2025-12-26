@@ -100,13 +100,13 @@ app_license = "MIT"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 # 	"all": [
 # 		"qp_customer_support.tasks.all"
 # 	],
-# 	"daily": [
-# 		"qp_customer_support.tasks.daily"
-# 	],
+ 	"hourly": [
+ 		"qp_customer_support.tasks.auto_close_expired_issues"
+ 	],
 # 	"hourly": [
 # 		"qp_customer_support.tasks.hourly"
 # 	],
@@ -116,7 +116,7 @@ app_license = "MIT"
 # 	"monthly": [
 # 		"qp_customer_support.tasks.monthly"
 # 	]
-# }
+}
 
 # Testing
 # -------
