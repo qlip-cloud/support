@@ -17,7 +17,8 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Band",
-   "options": "qp_Support_Band"
+   "options": "qp_Support_Band",
+   "reqd": 1
   },
   {
    "fieldname": "support_product",
@@ -27,13 +28,14 @@
    "in_preview": 1,
    "in_standard_filter": 1,
    "label": "Support Product",
-   "options": "Support product"
+   "options": "Support product",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-27 11:15:08.781760",
+ "modified": "2025-12-30 11:50:20.764816",
  "modified_by": "Administrator",
  "module": "Qp Customer Support",
  "name": "Band_Support_Product",
