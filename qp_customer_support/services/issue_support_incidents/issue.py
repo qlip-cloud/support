@@ -27,9 +27,7 @@ def update_status_close(**args):
         if int(issue.get('issue_modified_time')) >= int(CLOSE_ISSUE_PARAM):
             """Update issue"""
             doc = frappe.get_doc("Issue", issue.get('name'))
-            doc.status = ISSUE_UPDATE_TO_STATUS
-            doc.flags.ignore_permissions = True
-            doc.flags.ignore_mandatory = True
+
             assigned = frappe.db.get_value(
                 'ToDo',
                 {
@@ -39,12 +37,24 @@ def update_status_close(**args):
                 },
                 'owner'
             )
-            frappe.db.set_value('Issue', doc.name, {
-                'status': ISSUE_UPDATE_TO_STATUS,
-                'modified_by': assigned if assigned else doc.modified_by
-            }, update_modified=True)
-            frappe.get_doc("Issue", doc.name).add_comment(
-                comment_type='Info',
-                text=f'Estado actualizado automáticamente de "{ISSUE_STATUS}" a "{ISSUE_UPDATE_TO_STATUS}" después de {CLOSE_ISSUE_PARAM} días de inactividad.'
-           )
-            doc.save()
+            
+            current_user = frappe.session.user
+            
+            assigned_user = assigned if assigned else doc.modified_by
+            
+            frappe.set_user(assigned_user)
+            try:
+                doc.reload()
+                doc.status = ISSUE_UPDATE_TO_STATUS
+                doc.flags.ignore_permissions = True
+                doc.flags.ignore_mandatory = True
+                doc.save()
+                
+                
+                doc.add_comment(
+                    comment_type='Info',
+                    text=f'Estado actualizado automáticamente de "{ISSUE_STATUS}" a "{ISSUE_UPDATE_TO_STATUS}" después de {CLOSE_ISSUE_PARAM} días de inactividad.'
+            )
+            finally:
+                frappe.set_user(current_user)
+            frappe.db.commit()
