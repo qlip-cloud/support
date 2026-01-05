@@ -30,4 +30,21 @@ def update_status_close(**args):
             doc.status = ISSUE_UPDATE_TO_STATUS
             doc.flags.ignore_permissions = True
             doc.flags.ignore_mandatory = True
+            assigned = frappe.db.get_value(
+                'ToDo',
+                {
+                    'reference_type': 'Issue',
+                    'reference_name': doc.name,
+                    'status': 'Open'
+                },
+                'allocated_to'
+            )
+            frappe.db.set_value('Issue', doc.name, {
+                'status': ISSUE_UPDATE_TO_STATUS,
+                'modified_by': assigned if assigned else doc.modified_by
+            }, update_modified=True)
+            frappe.get_doc("Issue", doc.name).add_comment(
+                comment_type='Info',
+                text=f'Estado actualizado automáticamente de "{ISSUE_STATUS}" a "{ISSUE_UPDATE_TO_STATUS}" después de {CLOSE_ISSUE_PARAM} días de inactividad.'
+           )
             doc.save()
