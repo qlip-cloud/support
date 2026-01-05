@@ -37,7 +37,7 @@ def update_status_close(**args):
                     'reference_name': doc.name,
                     'status': 'Open'
                 },
-                'allocated_to'
+                'owner'
             )
             frappe.db.set_value('Issue', doc.name, {
                 'status': ISSUE_UPDATE_TO_STATUS,
