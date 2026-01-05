@@ -27,7 +27,29 @@ def update_status_close(**args):
         if int(issue.get('issue_modified_time')) >= int(CLOSE_ISSUE_PARAM):
             """Update issue"""
             doc = frappe.get_doc("Issue", issue.get('name'))
-            doc.status = ISSUE_UPDATE_TO_STATUS
-            doc.flags.ignore_permissions = True
-            doc.flags.ignore_mandatory = True
-            doc.save()
+
+            assigned = frappe.db.get_value(
+                'ToDo',
+                {
+                    'reference_type': 'Issue',
+                    'reference_name': doc.name,
+                    'status': 'Open'
+                },
+                'owner'
+            )
+            
+            current_user = frappe.session.user
+            
+            assigned_user = assigned if assigned else doc.modified_by
+            
+            frappe.set_user(assigned_user)
+            try:
+                doc.reload()
+                doc.status = ISSUE_UPDATE_TO_STATUS
+                doc.flags.ignore_permissions = True
+                doc.flags.ignore_mandatory = True
+                doc.save()
+                
+            finally:
+                frappe.set_user(current_user)
+            frappe.db.commit()
