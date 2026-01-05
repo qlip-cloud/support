@@ -50,11 +50,6 @@ def update_status_close(**args):
                 doc.flags.ignore_mandatory = True
                 doc.save()
                 
-                
-                doc.add_comment(
-                    comment_type='Info',
-                    text=f'Estado actualizado automáticamente de "{ISSUE_STATUS}" a "{ISSUE_UPDATE_TO_STATUS}" después de {CLOSE_ISSUE_PARAM} días de inactividad.'
-            )
             finally:
                 frappe.set_user(current_user)
             frappe.db.commit()
