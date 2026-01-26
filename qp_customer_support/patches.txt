@@ -1,0 +1,1 @@
+qp_customer_support.patches.fix_mandatory_fields_property_setters
